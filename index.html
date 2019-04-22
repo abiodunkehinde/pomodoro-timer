@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pomodoro</title>
+  <style>
+    body { background: #ee5a52; color: white; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0; }
+    .timer { font-size: 5em; font-family: monospace; }
+    button { margin: 10px; padding: 12px 25px; background: white; color: #ee5a52; border: none; border-radius: 50px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="timer" id="time">25:00</div>
+  <div>
+    <button onclick="start()">Start</button>
+    <button onclick="pause()">Pause</button>
+    <button onclick="reset()">Reset</button>
+  </div>
+  <script>
+    let interval, seconds = 25 * 60;
+    function start() { if(!interval) interval = setInterval(tick, 1000); }
+    function pause() { clearInterval(interval); interval = null; }
+    function reset() { pause(); seconds = 25 * 60; update(); }
+    function tick() {
+      if(seconds <= 0) { reset(); alert('Time Up!'); return; }
+      seconds--; update();
+    }
+    function update() {
+      const m = Math.floor(seconds/60).toString().padStart(2,'0');
+      const s = (seconds%60).toString().padStart(2,'0');
+      document.getElementById('time').textContent = `${m}:${s}`;
+    }
+  </script>
+</body>
+</html>
